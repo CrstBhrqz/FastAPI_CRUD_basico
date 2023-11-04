@@ -44,7 +44,7 @@ class User(BaseModel):
     email:str
     password:str
 
-class JWTBearer(HTTPBearer):
+class JWTBearer(HTTPBearer):#clase para validacion de token en los distintas peticiones de las urls
     async def __call__(self, request: Request):
         auth = await super().__call__(request)
         data = validate_token(auth.credentials)
@@ -92,7 +92,7 @@ def message():
     return HTMLResponse('<h1>hello world</h1>')
 
 
-@app.get('/movies',tags=['movies'],status_code=200, dependencies=[Depends(JWTBearer())])
+@app.get('/movies',tags=['movies'],status_code=200, dependencies=[Depends(JWTBearer())])#implementacion de la clase para pedir token y poder mostar informacion
 def get_movies():
     return JSONResponse(status_code=200,content=movies)
 
